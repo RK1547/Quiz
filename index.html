@@ -18,12 +18,17 @@
     <div class="quiz">
       <h2 id="question">Question goes here</h2>
       <div id="answer-buttons">
-        <button class="btn">Answer 1</button>
-        <button class="btn">Answer 2</button>
-        <button class="btn">Answer 3</button>
-        <button class="btn">Answer 4</button>
+        <!-- Answer buttons will be generated dynamically -->
       </div>
-      <button id="next-btn">Next</button>
+      <div class="progress-container">
+  <div class="progress-bar" id="progress-bar"></div>
+</div>
+<div class="progress-container">
+  <div class="progress-bar" id="progress-bar"></div>
+</div>
+
+      <button id="start-quiz-btn">Start Quiz</button> <!-- Changed id to start-quiz-btn -->
+      <button id="next-btn" style="display: none;">Next</button> <!-- Hide Next button initially -->
     </div>
     <div class="result" id="result">
       <h2>Quiz Completed!</h2>
