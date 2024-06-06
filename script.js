@@ -1,6 +1,6 @@
 const questions = [
   {
-    question: "Which is largest animal in the world ?",
+    question: "Which is largest animal in the world?",
     answers: [
       { text: "Sharks", correct: false },
       { text: "Blue Whale", correct: true },
@@ -9,7 +9,7 @@ const questions = [
     ],
   },
   {
-    question: "Which is the smallest country in the world ?",
+    question: "Which is the smallest country in the world?",
     answers: [
       { text: "Vatican City", correct: true },
       { text: "Bhutan", correct: false },
@@ -18,7 +18,7 @@ const questions = [
     ],
   },
   {
-    question: "Which is the largest desert in the world ?",
+    question: "Which is the largest desert in the world?",
     answers: [
       { text: "Kalahari", correct: false },
       { text: "Gobi", correct: false },
@@ -27,7 +27,7 @@ const questions = [
     ],
   },
   {
-    question: "Which is the smallest continent in the world ?",
+    question: "Which is the smallest continent in the world?",
     answers: [
       { text: "Asia", correct: false },
       { text: "Australia", correct: true },
@@ -101,6 +101,7 @@ const finalScoreElement = document.getElementById("final-score");
 const totalTimeElement = document.getElementById("total-time");
 const restartButton = document.getElementById("restart-btn");
 const celebrationElement = document.getElementById("celebration");
+const startQuizButton = document.getElementById("start-quiz-btn");
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -117,6 +118,7 @@ function startQuiz() {
   }, 1000);
   scoreElement.innerText = `Score: ${score}`;
   resultElement.classList.remove("show");
+  startQuizButton.style.display = "none";
   showQuestion();
 }
 
@@ -195,6 +197,7 @@ nextButton.addEventListener("click", () => {
 });
 
 restartButton.addEventListener("click", startQuiz);
+startQuizButton.addEventListener("click", startQuiz);
 
 function triggerCelebration() {
   for (let i = 0; i < 50; i++) {
@@ -221,5 +224,29 @@ function triggerCelebration() {
     celebrationElement.innerHTML = "";
   }, 4000);
 }
+const progressBar = document.getElementById("progress-bar");
 
-startQuiz();
+function updateProgressBar() {
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  progressBar.style.width = `${progress}%`;
+}
+
+function showQuestion() {
+  resetState();
+  updateProgressBar(); // Update progress bar when showing a new question
+
+  let currentQuestion = questions[currentQuestionIndex];
+  let questionNo = currentQuestionIndex + 1;
+  questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+  currentQuestion.answers.forEach((answer) => {
+    const button = document.createElement("button");
+    button.innerHTML = answer.text;
+    button.classList.add("btn");
+    answerButtons.appendChild(button);
+    if (answer.correct) {
+      button.dataset.correct = answer.correct;
+    }
+    button.addEventListener("click", selectAnswer);
+  });
+}
